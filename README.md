@@ -1,67 +1,43 @@
-📊 ConstructCo & SaleCo SQL Analysis Project
+# **ConstructCo & SaleCo SQL Analysis Project**
 
-This project is part of my Data Science journey at Techma Zone, where I moved beyond basic CRUD operations and learned how real data analysts and data scientists work with relational data.
-Using SQLite, I analyzed two business-style databases:
+**Advanced SQL Analytics on Real-World Business Databases**  
+*Techma Zone Data Science Track – Relational Data Analysis Project*
 
-ConstructCo → Employee, project, job & assignment data
+This repository contains my complete solution to the **ConstructCo & SaleCo SQL Analysis Project**, where I went far beyond basic SELECT statements and worked like a real data analyst: translating business questions into efficient, readable, and accurate SQL queries.
 
-**SaleCo → Customers, invoices, products & sales data**
+I analyzed two realistic relational databases using **SQLite**:
+- **ConstructCo** → Construction company with employees, projects, jobs, assignments, and hourly rates  
+- **SaleCo** → Retail company with customers, products, invoices, invoice lines, and inventory data
 
-🚀 What This Project Includes
-✅ Advanced SQL Querying
+Completed **25 real-world business reporting tasks** using production-level SQL techniques.
 
-I worked with real-world SQL concepts used in data analytics, including:
+---
 
-JOIN (INNER, LEFT, RIGHT)
+### **Project Highlights**
 
-GROUP BY, ORDER BY
+- Advanced JOINs (INNER, LEFT, RIGHT, FULL)
+- Complex GROUP BY with HAVING
+- Aggregations: SUM, COUNT, AVG, MIN, MAX
+- Calculated/derived columns & conditional logic (CASE statements)
+- Subqueries & Common Table Expressions (CTEs)
+- Window functions (ROW_NUMBER, RANK, etc.)
+- Data validation & quality checks
+- Financial calculations (total charges, costs, profit margins, etc.)
+- Inventory valuation (using different costing methods)
+- Customer & product profitability analysis
+- Project & employee performance reporting
 
-Aggregations → SUM, COUNT, MIN, MAX, AVG
+---
 
-Calculated / Derived columns
+### **Key Business Reports Built Entirely in SQL**
 
-Data validation queries
+| Category                  | Sample Reports Created                                   |
+|---------------------------|------------------------------------------------------------------|
+| Employee Analytics        | Total charges per employee, hours worked by project, highest earners |
+| Project Management        | Project cost vs budget, completion status, resource allocation  |
+| Customer Insights         | Top customers by revenue, average order value, purchase frequency |
+| Product Performance       | Best-selling products, profit per product, slow-moving inventory |
+| Financial Reporting       | Total invoice amounts, outstanding payments, monthly revenue trends |
+| Inventory Valuation       | Current stock value using Average Cost & FIFO methods           |
 
-WHERE, IN, HAVING filtering
-
-Subqueries & CTEs
-
-Financial & business-level analytics
-
-📁 Key Tasks Solved
-
-✔ Employee and project lookups
-✔ Charge & cost calculations
-✔ Project-wise and employee-wise summaries
-✔ Invoice totals and customer purchase summaries
-✔ Product-level reporting
-✔ Inventory valuation
-✔ Business-focused reporting directly from SQL
-
-A total of 25 tasks were completed, each mimicking real company reporting.
-
-📈 What I Learned
-
-This project strengthened my:
-
-Analytical thinking
-
-Query architecture planning
-
-Understanding of relational business data
-
-Ability to extract insights from raw data
-
-Report creation and SQL documentation
-
-Mindset shift from “SQL learner” → “Data Analyst thinking”
-
-📄 Repository Includes
-
-Full SQL script for all 25 tasks
-
-Professional PDF report
-
-Clear task-wise outputs
-
-Business insights derived from the SQL results
+All 25 tasks are fully solved with clean, commented SQL and meaningful business insights.
