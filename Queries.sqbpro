@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="ConstructCo.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure pragmas browser query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2382"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="ASSIGNMENT" custom_title="0" dock_id="5" table="4,10:mainASSIGNMENT"/><dock_state state="000000ff00000000fd00000001000000020000054a00000257fc0100000004fb000000160064006f0063006b00420072006f00770073006500310100000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f007700730065003201000000000000054a0000000000000000fb000000160064006f0063006b00420072006f00770073006500340100000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f007700730065003501000000000000054a0000012300ffffff0000054a0000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="ASSIGNMENT" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="82"/><column index="2" value="86"/><column index="3" value="71"/><column index="4" value="65"/><column index="5" value="78"/><column index="6" value="103"/><column index="7" value="96"/><column index="8" value="102"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1*">--Task1
+SELECT EMP_NUM,EMP_LNAME,EMP_FNAME,EMP_INITIAL
+FROM EMPLOYEE
+WHERE EMP_LNAME like 'Smith%'
+ORDER BY EMP_NUM
+
+--Task2
+SELECT p.PROJ_NAME,p.PROJ_VALUE,p.PROJ_BALANCE,e.EMP_LNAME,e.EMP_FNAME,e.EMP_INITIAL,j.JOB_CODE,j.JOB_DESCRIPTION,j.JOB_CHG_HOUR
+FROM PROJECT AS p
+INNER JOIN EMPLOYEE AS e
+ON p.EMP_NUM == e.EMP_NUM
+INNER JOIN JOB AS j
+ON e.JOB_CODE == j.JOB_CODE
+GROUP BY p.PROJ_NAME
+ORDER BY PROJ_VALUE
+
+--Task3
+SELECT p.PROJ_NAME,p.PROJ_VALUE,p.PROJ_BALANCE,e.EMP_LNAME,e.EMP_FNAME,e.EMP_INITIAL,j.JOB_CODE,j.JOB_DESCRIPTION,j.JOB_CHG_HOUR
+FROM PROJECT AS p
+INNER JOIN EMPLOYEE AS e
+ON p.EMP_NUM == e.EMP_NUM
+INNER JOIN JOB AS j
+GROUP BY p.PROJ_NAME
+ORDER BY e.EMP_LNAME 
+
+--Task4
+SELECT DISTINCT PROJ_NUM
+FROM ASSIGNMENT
+ORDER BY PROJ_NUM
+
+--Task5
+SELECT ASSIGN_NUM,EMP_NUM,PROJ_NUM,ASSIGN_CHARGE,(ASSIGN_CHG_HR * ASSIGN_HOURS) AS CALCULATED_ASSIGN_CHARGE
+FROM ASSIGNMENT
+ORDER BY ASSIGN_NUM
+
+--Task6
+SELECT A.EMP_NUM,E.EMP_LNAME,sum(ASSIGN_HOURS) AS SumOfAssignHours,sum(ASSIGN_CHARGE) AS SumOfAssignCharge 
+FROM ASSIGNMENT AS A
+LEFT JOIN EMPLOYEE AS E
+ON A.EMP_NUM == E.EMP_NUM
+GROUP BY A.EMP_NUM
+ORDER BY A.EMP_NUM
+
+--Task7
+SELECT PROJ_NUM,sum(ASSIGN_HOURS) AS SumOfAssignHours,sum(ASSIGN_CHARGE) AS SumOfAssignCharge
+FROM ASSIGNMENT
+GROUP BY PROJ_NUM
+ORDER BY PROJ_NUM
+
+--Task8
+SELECT sum(ASSIGN_HOURS) AS SumOfAssignHours,sum(ASSIGN_CHARGE) AS SumOfAssignCharge
+FROM ASSIGNMENT
+
+--Task9
+SELECT count(INV_NUMBER),count(C.CUS_CODE)
+FROM INVOICE AS I
+RIGHT JOIN CUSTOMER AS C
+ON I.CUS_CODE == C.CUS_CODE 
+
+--Task10
+SELECT count(CUS_CODE) FROM CUSTOMER
+WHERE CUS_BALANCE &gt; 500
+
+--Task11
+SELECT I.CUS_CODE,I.INV_NUMBER,P_DESCRIPT,LINE_UNITS AS 'Units Bought',LINE_PRICE AS 'Unit Price',(LINE_UNITS * LINE_PRICE) AS Subtotal
+FROM 
+INVOICE AS I
+JOIN
+LINE AS L ON I.INV_NUMBER == L.INV_NUMBER
+JOIN 
+PRODUCT AS P ON P.P_CODE == L.P_CODE
+ORDER BY I.CUS_CODE,I.INV_NUMBER,P_DESCRIPT
+
+--Task12
+SELECT C.CUS_CODE,CUS_BALANCE,sum(LINE_UNITS * LINE_PRICE) AS 'Total Purchases'
+FROM
+CUSTOMER AS C
+JOIN
+INVOICE AS I ON I.CUS_CODE == C.CUS_CODE
+JOIN
+LINE AS L ON L.INV_NUMBER == I.INV_NUMBER
+GROUP BY C.CUS_CODE
+ORDER BY C.CUS_CODE
+
+--Task13
+SELECT C.CUS_CODE,CUS_BALANCE,sum(LINE_UNITS * LINE_PRICE) AS 'Total Purchases',count(L.INV_NUMBER) AS 'Number Of Purchses'
+FROM
+CUSTOMER AS C
+JOIN
+INVOICE AS I ON I.CUS_CODE == C.CUS_CODE
+JOIN
+LINE AS L ON L.INV_NUMBER == I.INV_NUMBER
+GROUP BY C.CUS_CODE
+ORDER BY C.CUS_CODE
+
+--Task14
+SELECT C.CUS_CODE,CUS_BALANCE,sum(LINE_UNITS * LINE_PRICE) AS 'Total Purchases',count(L.INV_NUMBER) AS 'Number Of Purchses',round(avg(L.LINE_UNITS*L.LINE_PRICE)	,2)
+FROM
+CUSTOMER AS C
+JOIN
+INVOICE AS I ON I.CUS_CODE == C.CUS_CODE
+JOIN
+LINE AS L ON L.INV_NUMBER == I.INV_NUMBER
+GROUP BY C.CUS_CODE
+ORDER BY C.CUS_CODE
+
+--Task15
+SELECT L.INV_NUMBER,sum(L.LINE_PRICE * L.LINE_UNITS) AS 'Invoice Total'
+FROM
+CUSTOMER AS C
+JOIN
+INVOICE AS I ON I.CUS_CODE == C.CUS_CODE
+JOIN
+LINE AS L ON L.INV_NUMBER == I.INV_NUMBER
+JOIN	
+PRODUCT AS P ON P.P_CODE == L.P_CODE
+GROUP BY L.INV_NUMBER
+ORDER BY L.INV_NUMBER
+
+--Task16
+SELECT C.CUS_CODE,L.INV_NUMBER,sum(L.LINE_PRICE * L.LINE_UNITS) AS 'Invoice Total'
+FROM
+CUSTOMER AS C
+JOIN
+INVOICE AS I ON I.CUS_CODE == C.CUS_CODE
+JOIN
+LINE AS L ON L.INV_NUMBER == I.INV_NUMBER
+GROUP BY I.INV_NUMBER
+ORDER BY C.CUS_CODE,L.INV_NUMBER
+
+--Task17 
+SELECT 
+    count(DISTINCT I.INV_NUMBER) AS Number_of_Invoices,
+    sum(L.LINE_UNITS * L.LINE_PRICE) AS Total_Customer_Purchases
+FROM 
+    INVOICE I
+JOIN 
+    LINE l ON I.INV_NUMBER = L.INV_NUMBER
+GROUP BY 
+    I.CUS_CODE
+ORDER BY 
+    I.CUS_CODE
+	
+--Task18 
+WITH CTE_P18 AS (
+SELECT 
+    I.CUS_CODE,
+    COUNT(DISTINCT I.INV_NUMBER) AS Number_of_Invoices,
+    SUM(L.LINE_UNITS * L.LINE_PRICE) AS Total_Customer_Purchases
+FROM 
+    INVOICE I
+JOIN 
+    LINE l ON I.INV_NUMBER = L.INV_NUMBER
+GROUP BY 
+    I.CUS_CODE
+)
+SELECT 
+	sum(Number_of_Invoices) 'Total Invoices',
+	round(sum(Total_Customer_Purchases),2) 'Total Sales',
+	round(min(Total_Customer_Purchases),2) 'Minimum Customer Purchase',
+	round(max(Total_Customer_Purchases),2) 'Maximum Customer Purchase',
+	round(avg(Total_Customer_Purchases),2) 'Average Customer Purchase'
+FROM CTE_P18
+	
+	
+SELECT DISTINCT C.CUS_CODE,C.CUS_BALANCE FROM 
+CUSTOMER C RIGHT JOIN INVOICE I ON C.CUS_CODE == I.CUS_CODE
+ORDER BY C.CUS_CODE
+
+SELECT DISTINCT C.CUS_CODE,C.CUS_BALANCE FROM 
+CUSTOMER C LEFT JOIN INVOICE I ON C.CUS_CODE != I.CUS_CODE
+ORDER BY C.CUS_CODE
+
+--Task 19
+SELECT DISTINCT
+C.CUS_CODE,C.CUS_BALANCE
+FROM
+CUSTOMER AS C
+RIGHT JOIN
+INVOICE AS I ON I.CUS_CODE == C.CUS_CODE
+
+--Task 20
+WITH CTEP20 AS(
+SELECT DISTINCT
+C.CUS_CODE AS &quot;CUSTOMER CODE&quot;,C.CUS_BALANCE AS &quot;CUSTOMER BALANCE&quot;
+FROM
+CUSTOMER AS C
+RIGHT JOIN
+INVOICE AS I ON I.CUS_CODE == C.CUS_CODE
+)
+SELECT
+min(&quot;CUSTOMER BALANCE&quot;) &quot;Minimum Balance&quot;,max(&quot;CUSTOMER BALANCE&quot;) &quot;Maximum Balance&quot;,round(avg(&quot;CUSTOMER BALANCE&quot;),2) &quot;Average Balance&quot;
+FROM
+CTEP20
+
+--Task 21
+SELECT
+sum(CUS_BALANCE),round(min(CUS_BALANCE),2),max(CUS_BALANCE),round(avg(CUS_BALANCE),2)
+FROM
+CUSTOMER
+
+--Task 22
+SELECT DISTINCT
+C.CUS_CODE,C.CUS_BALANCE
+FROM
+CUSTOMER AS C
+WHERE C.CUS_CODE NOT IN (SELECT
+I.CUS_CODE
+FROM
+INVOICE AS I
+)
+
+--Task 23
+
+SELECT
+sum(CUS_BALANCE),round(min(CUS_BALANCE),2),max(CUS_BALANCE),round(avg(CUS_BALANCE),2)
+FROM
+CUSTOMER AS C
+WHERE C.CUS_CODE NOT IN (SELECT
+I.CUS_CODE
+FROM
+INVOICE AS I
+)
+
+--Task 24
+SELECT
+P_DESCRIPT,P_QOH,P_PRICE,round((P_PRICE*P_QOH),2) AS Subtotal
+FROM
+PRODUCT
+ORDER BY
+Subtotal DESC
+
+--Task 25
+SELECT
+round(sum((P_PRICE*P_QOH)),2) AS Subtotal
+FROM
+PRODUCT</sql><current_tab id="0"/></tab_sql></sqlb_project>
